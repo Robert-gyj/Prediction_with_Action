@@ -1,0 +1,12 @@
+name: PAD
+channels:
+  - pytorch
+  - nvidia
+dependencies:
+  - python >= 3.8
+  - pytorch >= 2.0.0
+  - torchvision
+  - pip:
+    - timm
+    - diffusers
+    - accelerate

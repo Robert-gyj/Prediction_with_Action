@@ -1,0 +1,7 @@
+results*
+__pycache__
+samples
+metaworld_video
+rollout_videos
+output
+ckpt
