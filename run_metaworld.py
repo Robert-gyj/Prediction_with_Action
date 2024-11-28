@@ -12,8 +12,8 @@ import cv2
 os.environ["MUJOCO_GL"] = "egl"
 from metaworld.envs import (ALL_V2_ENVIRONMENTS_GOAL_OBSERVABLE, ALL_V2_ENVIRONMENTS_GOAL_HIDDEN)
 
-from agent import DiffusionAgent
-from run_cfg import INSTRUCTIONS, CONFIG 
+from evaluation.agent import DiffusionAgent
+from evaluation.run_cfg import INSTRUCTIONS, CONFIG 
 
 def add_bound(rgb,color="red"):
     width=10
@@ -38,7 +38,7 @@ def merge_img(obs, predict,img_word):
 
 def plot_word():
     from PIL import Image, ImageDraw, ImageFont
-    fnt_titile = ImageFont.truetype("./TIMES.ttf", int(600/20))
+    fnt_titile = ImageFont.truetype("evaluation/TIMES.ttf", int(600/20))
     img_word = Image.new('RGB', (256*4,40), color = 'white')
     draw = ImageDraw.Draw(img_word)
     task = "Observations"
@@ -152,6 +152,7 @@ for selected_id, task in enumerate(task_list):
             
             # motion planner to reach the target pose, starting from the current pose
             info, img = motion_planner(target_xyz, target_gripper, curr_xyz, curr_gripper, env, image_3, thirdview, predict_img=predict_img, img_word=img_word)
+            print(info)
 
             if info['success']:
                 print(task, traj_idx, 'success')
@@ -170,4 +171,3 @@ for i in range(len(task_list)):
 
 # running command:
 # CUDA_VISIBLE_DEVICES=1 python sample_pose.py
-# unset LD_PRELOAD CUDA_VISIBLE_DEVICES=0 python sample_pose.py

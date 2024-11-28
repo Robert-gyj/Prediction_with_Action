@@ -3,14 +3,14 @@ import torch.distributed as dist
 from models import DiT_models
 from diffusion import create_diffusion
 from diffusers.models import AutoencoderKL
-from agent import DiffusionAgent
 from PIL import Image
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import time
 import os
-from run_cfg import INSTRUCTIONS, CONFIG, BRIDGE_CONFIG 
+from evaluation.agent import DiffusionAgent
+from evaluation.run_cfg import INSTRUCTIONS, CONFIG, BRIDGE_CONFIG 
 from decord import VideoReader, cpu
 
 def _load_video(video_path, frame_ids):
