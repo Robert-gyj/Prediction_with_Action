@@ -45,13 +45,12 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH::/usr/lib/nvidia
 source ~/.bashrc
 
 # install mujoco_py
-cd ~/.mujoco/mujoco210/bin
 pip install mujoco_py==2.1.2.14
 
 # test
 import mujoco_py
 
-# After install the Mujoco200/Mujoco210, install Metaworld:
+# After install the mujoco_py, install Metaworld:
 cd metaworld
 pip install -e .
 ```
@@ -82,7 +81,7 @@ Next, download the PAD checkpoint. For convenience, we offer two types of PAD mo
 For your convenience, we put some bridge video samples in the folder `gallery/bridge`. You can visualize predictions by running inference on ckpt [bridge-pre](https://github.com/Robert-gyj/Prediction_with_Action). Remember to reset the `ckpt_path, vae_path, clip_path, sample_name` in `BRIDGE_CONFIG` of `evaluation/run_cfg.py` to your model download locations.
 
 ```bash
-python evaluation/run_bridge.py
+python run_bridge.py
 ```
 
 After running this command, you can find some outputs in the folder `output/bridge_prediction` which should be simialr to that in `gallery/bridge_prediction`
@@ -92,7 +91,7 @@ After running this command, you can find some outputs in the folder `output/brid
 You should install Metaworld as described in installation section and also download the [bridge-pre-mw-ft](https://github.com/Robert-gyj/Prediction_with_Action) ckpt.  Remember to reset the `ckpt_path, vae_path, clip_path` in `META_CONFIG` inside `evaluation/run_cfg.py` to where your model located, also reset the roll tasks `task_list`. All available task names are listed in `INSTRUCTION` inside `evaluation/run_cfg.py`.  After these setup finishes, you can rollout with:
 
 ```bash
-python evaluation/run_meatworld.py
+python run_meatworld.py
 ```
 
 After running this command, you can find some rollout videos in the folder `output/rollout_metaworld` which visualize both the current observations and future predictions. Some video examples are provided in `gallery/rollout_metaworld`.
