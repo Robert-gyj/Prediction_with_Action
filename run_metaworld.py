@@ -13,7 +13,7 @@ os.environ["MUJOCO_GL"] = "egl"
 from metaworld.envs import (ALL_V2_ENVIRONMENTS_GOAL_OBSERVABLE, ALL_V2_ENVIRONMENTS_GOAL_HIDDEN)
 
 from evaluation.agent import DiffusionAgent
-from evaluation.run_cfg import INSTRUCTIONS, CONFIG 
+from evaluation.run_cfg import INSTRUCTIONS, META_CONFIG 
 
 def add_bound(rgb,color="red"):
     width=10
@@ -102,16 +102,16 @@ def motion_planner(target_xyz, target_gripper, curr_xyz, curr_gripper, env, imag
 
 # rollout tasks
 task_list = [key for key in INSTRUCTIONS.keys()]
-task_list = CONFIG['task_list']
+task_list = META_CONFIG['task_list']
 success_num = np.zeros(len(task_list))
-thirdview = CONFIG['thirdview_camera']
-firstview = CONFIG['firstview_camera']
-ckpt_path = CONFIG['ckpt_path']
-use_depth = CONFIG['use_depth']
+thirdview = META_CONFIG['thirdview_camera']
+firstview = META_CONFIG['firstview_camera']
+ckpt_path = META_CONFIG['ckpt_path']
+use_depth = META_CONFIG['use_depth']
 
 # build agent
-agent = DiffusionAgent(ckpt_path=ckpt_path,vae_path=CONFIG['vae_path'], clip_path=CONFIG['clip_path'], denoise_steps=CONFIG['denoise_steps'])
-if CONFIG['visualize_prediction']:
+agent = DiffusionAgent(ckpt_path=ckpt_path,vae_path=META_CONFIG['vae_path'], clip_path=META_CONFIG['clip_path'], denoise_steps=META_CONFIG['denoise_steps'])
+if META_CONFIG['visualize_prediction']:
     img_word = plot_word()
 else:
     img_word = None
@@ -122,14 +122,14 @@ for selected_id, task in enumerate(task_list):
     env_cls = ALL_V2_ENVIRONMENTS_GOAL_OBSERVABLE[task+"-goal-observable"]
     env = env_cls(seed=selected_id+100)
 
-    for traj_idx in range(CONFIG['rollout_num']):
+    for traj_idx in range(META_CONFIG['rollout_num']):
         print("task name", task, 'traj_idx', traj_idx)
         image_3 = []
 
         obs = env.reset()
         img = env.render(offscreen=True, camera_name=thirdview, resolution=[224,224],depth=False)
         # image_3.append(img)
-        for plan_step in tqdm(range(CONFIG['max_steps'])):
+        for plan_step in tqdm(range(META_CONFIG['max_steps'])):
             # prepare input data
             grasp_moment = False
             state = obs
@@ -142,7 +142,7 @@ for selected_id, task in enumerate(task_list):
             # plan next target with PAD agent
             samples,sample_a,sample_depth = agent.action(text, rgb, depth, state)
 
-            if CONFIG['visualize_prediction']:
+            if META_CONFIG['visualize_prediction']:
                 predict_img = agent.decode_rgb(rgb, samples) # np.array shape (256,256*3)
                 predict_img = add_bound(predict_img)
 
@@ -161,7 +161,7 @@ for selected_id, task in enumerate(task_list):
         
         # save video
         # ckpt_path = ckpt_path.split('.')[0]
-        video_dir = CONFIG['video_dir']
+        video_dir = META_CONFIG['video_dir']
         os.makedirs(f'{video_dir}/rollout_metaworld', exist_ok=True)
         mediapy.write_video(f'{video_dir}/rollout_metaworld/{task}_{traj_idx}.mp4', image_3, fps=20)
     

@@ -100,7 +100,7 @@ class RobotDataset(Dataset):
     def __init__(self, features_dir, args):
 
         # You need to implement a new dataset class if youre dataset structure is different
-        ################################ Our dataset structrue:############################
+        ################################ Default dataset structrue:############################
         #   dataset_rgb_s_d.json
         #   episode 0
         #       clip_emb
@@ -241,7 +241,7 @@ class RobotDataset(Dataset):
             action = action*args.action_scale
             cond_action = np.array(self.cond_action[idx]).reshape(1,-1)*args.action_scale
 
-            # whether condition on current action
+            # whether condition on current pose
             if args.action_condition:
                 action = action.reshape(1,-1)
                 assert action.shape[-1] == args.action_dim*args.action_steps
@@ -380,6 +380,8 @@ def main(args):
                 depth_cond = depth_cond.to(device)
                 depth = depth.to(device)
             
+            if args.action_steps>0:
+                action = action.to(device)
             if args.action_steps>0 and args.action_condition:
                 action_cond = action_cond.to(device)
 

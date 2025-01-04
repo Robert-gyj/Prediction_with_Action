@@ -1,22 +1,22 @@
-CONFIG = {
-    'ckpt_path': "ckpt/bridge_pre_mw_ft.pt",
-    'vae_path': "/home/disk2/gyj/llm/sd-vae-ft-mse/",
-    'clip_path': "/home/disk2/gyj/llm/clip-vit-base-patch32/",
+META_CONFIG = {
+    'ckpt_path': "ckpt/bridge_pre_mw_ft.pt", # replace!
+    'vae_path': "/home/disk2/gyj/llm/sd-vae-ft-mse/", # replace!
+    'clip_path': "/home/disk2/gyj/llm/clip-vit-base-patch32/", # replace!
     'thirdview_camera': 'corner3',
     'firstview_camera': 'gripperPOV',
-    'use_depth': False,
-    'rollout_num': 5,
-    'max_steps': 20,
+    'use_depth': False, # whether to use depth
+    'rollout_num': 5, # number of rollouts for each tasks
+    'max_steps': 20, # max planning steps for each rollout
     'video_dir': "output",
     'visualize_prediction': True,
-    'denoise_steps': 50,
-    'task_list': ['disassemble-v2']
+    'denoise_steps': 50, # joint denoise step
+    'task_list': ['pick-place-v2', 'basketball-v2'] # tasks you want to test
 }
 
 BRIDGE_CONFIG = {
-    'ckpt_path': "ckpt/bridge_pre.pt",
-    'vae_path': "/home/disk2/gyj/llm/sd-vae-ft-mse/",
-    'clip_path': "/home/disk2/gyj/llm/clip-vit-base-patch32/",
+    'ckpt_path': "ckpt/bridge_pre.pt", # replace!
+    'vae_path': "/home/disk2/gyj/llm/sd-vae-ft-mse/", # replace!
+    'clip_path': "/home/disk2/gyj/llm/clip-vit-base-patch32/", # replace!
     'sample_name':"sample_0"
 }
 
