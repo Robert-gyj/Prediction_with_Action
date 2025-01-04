@@ -31,8 +31,10 @@ conda activate PAD
 
 
 If you want to perform experiments in [Metaworld](https://github.com/Farama-Foundation/Metaworld), you need to first install the `Mujoco`. Metaworld is in active developing with different versions of `Mujoco`, we include a older version of Metaworld in codebase based on `mujoco-py==2.0.x/2.1.x`. 
-Install Mujoco and metaworld
+Install Mujoco and metaworld:
 ```bash
+# If you do not want to use metawolrd, you can skip installations below.
+
 # dowload
 dowload from https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz
 mkdir ~/.mujoco
@@ -62,7 +64,7 @@ Next, download the PAD checkpoint. For convenience, we offer two types of PAD mo
 
 | Ckpt name     | Training type | Parameter Num |
 |---------------|------------------|---------|
-| [bridge-pre](hhttps://huggingface.co/yjguo/pad_bridge_pre/tree/main) | Bridge Dataset Pretrain         | ~670M    |
+| [bridge-pre](https://huggingface.co/yjguo/pad_bridge_pre/tree/main) | Bridge Dataset Pretrain         | ~670M    |
 | [bridge-pre-mw-ft](https://huggingface.co/yjguo/pad_bridge_pre/tree/main) |    Bridge Dataset Pretrain + Metaworld Finetuned      | ~670M    |
 
 
